@@ -13,7 +13,6 @@ function getCityFromURL(search) {
 
 }
 
-
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
