@@ -3,22 +3,70 @@ import config from "../conf/index.js";
 
 //Implementation to extract city from query params
 function getCityFromURL(search) {
+  // console.log(typeof(search));
+  // console.log(search+"hii")
+
+  return search.slice(6);
+  
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
 
 }
 
+
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
+  //console.log(config.backendEndpoint+"/adventures?city="+city);
+  try{
+  let res = await fetch(`${config.backendEndpoint}/adventures?city=${city}`)
+  return await res.json();}
+  catch(err){
+    return null;
+  }
 
 }
+// city = "Bangalore";
+// adventures = fetchAdventures(city);
+// addAdventureToDOM(adventures);
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
+  adventures.forEach(element => {
+    console.log(element.category);
+
+    let card = document.createElement("div");
+    //create some card div for columns--use from qtripstatic
+    //link id should be same as given id
+    //description is like 250+places
+    //queryselector is taken from element -- copy -- copy as js path.
+    card.className ="col-6 col-sm-6 col-lg-3 mb-4"; 
+    card.innerHTML=
+            
+          `<a id = ${element.id} href = "detail/?adventure=${element.id}" >
+             <div class="activity-card">  
+             <div class = "category-banner">
+             <p>${element.category}</p>
+             </div>
+             <img class="activity-card img rounded mx-auto" src = "${element.image}" alt = "Bengaluru">
+              <div class="text d-flex w-100"> 
+               <div class="flex-fill justify-content-start "> ${element.name}</div>
+                <div class="justify-content-end"> ₹${element.costPerHead}</div>
+                <div class="line-break"></div>
+                <div class="flex-fill justify-content-start"> Duration</div>
+               <div class="justify-content-end">${element.duration} Hours</div>
+              </div> 
+             </div>  
+           </a>        
+        `
+        let parent = document.querySelector("#data");
+        parent.appendChild(card);
+    
+  });
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
+
 
 }
 

@@ -75,6 +75,24 @@ footer {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+
+.line-break{
+  width:100%;
+
+}
+.text{
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  /* margin:10%; */
+  padding-left:10%;
+  padding-right: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  
+  /* background-color: pink; */
+}
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
