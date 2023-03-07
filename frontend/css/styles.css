@@ -136,20 +136,14 @@ footer {
   border-radius: 8px;
   cursor: pointer;
   -webkit-transition: 0.2s all;
-  /* overflow-y: hidden; */
-  /* overflow-x:hidden; */
   overflow: hidden;
-  
 
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* align-items: strech; */
-  
+  align-items: center;
 }
 .activity-card img {
-  /* overflow-y: hidden; */
-  
   width: 100%;
   height: 100%;
   /* border-radius: 8px; */
