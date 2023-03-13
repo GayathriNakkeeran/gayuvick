@@ -36,10 +36,12 @@ function addAdventureDetailsToDOM(adventure) {
 // console.log(adventure);
   heading.innerHTML=`${adventure.name}`
 
+
   let subHeading = document.querySelector("#adventure-subtitle");
   subHeading.innerHTML = `${adventure.subtitle}`
 
   let gallery = document.querySelector("#photo-gallery");
+  //console.log(adventure);
   let photoArray = adventure.images;
   photoArray.forEach(element => {
     gallery.innerHTML+=`<img src=${element} class="activity-card-image">`    
@@ -134,9 +136,31 @@ function addBootstrapPhotoGallery(images) {
   // 1. Add the bootstrap carousel to show the Adventure images
 
 
-
+  
 //Implementation of conditional rendering of DOM based on availability
 function conditionalRenderingOfReservationPanel(adventure) {
+  let soldOut = document.querySelector("#reservation-panel-sold-out");
+  let reserve = document.querySelector("#reservation-panel-available");
+  if(adventure.available){
+    //console.log(adventure);
+    
+    soldOut.style.display ="none";
+    reserve.style.display= "block";
+    let cost=document.querySelector("#reservation-person-cost");
+    cost.innerHTML = `${adventure.costPerHead}`;
+
+
+  }
+  else{
+    soldOut.style.display ="block";
+    reserve.style.display="none";
+    
+
+  }
+  
+
+
+  // let soldOut = 
   // TODO: MODULE_RESERVATIONS
   // 1. If the adventure is already reserved, display the sold-out message.
 
@@ -144,6 +168,8 @@ function conditionalRenderingOfReservationPanel(adventure) {
 
 //Implementation of reservation cost calculation based on persons
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
+  let total = document.querySelector("#reservation-cost");
+  total.innerHTML = `${persons*adventure.costPerHead}`
   // TODO: MODULE_RESERVATIONS
   // 1. Calculate the cost based on number of persons and update the reservation-cost field
 
@@ -153,11 +179,76 @@ function calculateReservationCostAndUpdateDOM(adventure, persons) {
 function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
-  // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
+  // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. 
+  //If the reservation fails, just show an alert with "Failed!".
+  const form = document.getElementById("myForm");
+  //console.log(form.elements);
+
+  
+  //console.log(name,person,date ,`${adventure.id}`);
+  
+  
+ // console.log(inputs);
+  
+ // console.log(typeof(inputs));
+  //inputs.assign({adventure: adventure.id});
+  
+
+    
+  
+    // Get the form element
+   
+  
+    // Add 'submit' event handler
+    form.addEventListener("submit", (event) => {
+
+     event.preventDefault();
+     let name = form.elements['name'].value;
+  let person = form.elements["person"].value;
+  let date = form.elements["date"].value;
+  let inputs = {name:name ,date:date, person:person, adventure:`${adventure.id}`}
+  const options = {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(inputs),
+    };
+    fetch(`${config.backendEndpoint}/reservations/new`, options)
+    .then(data => {
+      if (!data.ok) {
+        alert("Failure");
+       }
+       else{
+        alert("success");
+       }
+       return data.json();
+      })
+      // let refresh = document.querySelector("#myForm > button");
+      // refresh.click(function(){
+      //   location.reload();
+      // })
+    })
+    
+      
+  
+  
 }
 
 //Implementation of success banner after reservation
 function showBannerIfAlreadyReserved(adventure) {
+  let ban = document.getElementById("reserved-banner");
+
+  if(adventure.reserved){
+    //console.log("hii")
+    
+   // console.log(ban.style);
+    ban.style.display="block";}
+    else{
+      ban.style.display="none";
+    }
+    
+  
   // TODO: MODULE_RESERVATIONS
   // 1. If user has already reserved this adventure, show the reserved-banner, else don't
 
